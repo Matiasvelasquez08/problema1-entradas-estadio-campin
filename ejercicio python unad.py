@@ -4,7 +4,7 @@
 #Carrera: Ingenieria de Sistemas
 #Codigo de fuente: autoria propia
 #-----------------------------------
-
+#programa para comprar una entrada al estadio el campin
 def mostrar_sectores():
     
     print("\n" + "="*50)
@@ -98,4 +98,5 @@ def main():
             print("Intente nuevamente.")
 
 if __name__ == "__main__":
+
     main()
