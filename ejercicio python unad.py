@@ -1,102 +1,64 @@
+# Programa para calcular el total a pagar en entradas al estadio El Campín
 #-----------------------------------
 #Nombre: Matias felipe velasquez
 #Codigo y Grupo: 213022-270
 #Carrera: Ingenieria de Sistemas
 #Codigo de fuente: autoria propia
 #-----------------------------------
-#programa para comprar una entrada al estadio el campin
-def mostrar_sectores():
-    
-    print("\n" + "="*50)
-    print("    ESTADIO EL CAMPÍN - SECTORES DISPONIBLES")
-    print("="*50)
-    sectores = {
-        'A': ('Norte alta', 15000),
-        'B': ('Norte baja', 13000),
-        'C': ('Oriental alta', 10000),
-        'D': ('Occidental alta', 11000),
-        'E': ('Exclusivo', 20000)
-    }
-    
-    for codigo, (nombre, precio) in sectores.items():
-        print(f"  {codigo} - {nombre:<18} ${precio:,}")
-    print("="*50)
-    return sectores
 
-def validar_cantidad():
-   
-    while True:
-        try:
-            cantidad = input("\nIngrese la cantidad de entradas: ")
-            cantidad = int(cantidad)
-            
-            if cantidad <= 0:
-                print("❌ Error: La cantidad debe ser un número entero positivo.")
-                continue
-                
-            return cantidad
-            
-        except ValueError:
-            print("❌ Error: Por favor ingrese un número entero válido.")
+print("=" * 50)
+print("    ESTADIO EL CAMPÍN - CALCULADORA DE ENTRADAS")
+print("=" * 50)
 
-def seleccionar_sector(sectores):
+
+sectores = {
+    'A': {'nombre': 'Norte Alta', 'precio': 15000},
+    'B': {'nombre': 'Norte Baja', 'precio': 13000},
+    'C': {'nombre': 'Oriental Alta', 'precio': 10000},
+    'D': {'nombre': 'Occidental Alta', 'precio': 11000},
+    'E': {'nombre': 'Exclusivo', 'precio': 20000}
+}
+
+
+print("\nSECTORES DISPONIBLES:")
+print("-" * 30)
+for codigo, info in sectores.items():
+    print(f"{codigo} - {info['nombre']}: ${info['precio']:,}")
+
+
+while True:
+    sector_elegido = input("\nIngrese el código del sector (A, B, C, D, E): ").upper().strip()
     
-    while True:
-        sector = input("\nSeleccione el sector (A, B, C, D, E): ").upper().strip()
+    if sector_elegido in sectores:
+        break
+    else:
+        print("Error: Código de sector inválido. Por favor ingrese A, B, C, D o E.")
+
+
+while True:
+    try:
+        cantidad_str = input("Ingrese la cantidad de entradas: ").strip()
+        cantidad = int(cantidad_str)
         
-        if sector in sectores:
-            return sector
-        else:
-            print("❌ Error: Sector no válido. Por favor seleccione A, B, C, D o E.")
-
-def calcular_total():
-    
-    print("  SISTEMA DE VENTA DE ENTRADAS - ESTADIO EL CAMPÍN")
-    
-    
-    sectores = mostrar_sectores()
-    
-   
-    sector_codigo = seleccionar_sector(sectores)
-    sector_nombre, precio_unitario = sectores[sector_codigo]
-    
-    
-    cantidad = validar_cantidad()
-    
-    
-    total = precio_unitario * cantidad
-    
-   
-    print("\n" + "="*50)
-    print("           RESUMEN DE COMPRA")
-    print("="*50)
-    print(f"  Sector seleccionado: {sector_codigo} - {sector_nombre}")
-    print(f"  Precio unitario:     ${precio_unitario:,}")
-    print(f"  Cantidad de entradas: {cantidad}")
-    print("-"*50)
-    print(f"  TOTAL A PAGAR:       ${total:,}")
-    print("="*50)
-    
-    return total
-
-def main():
-    
-    while True:
-        try:
-            calcular_total()
-            
-            continuar = input("\n¿Desea realizar otra compra? (s/n): ").lower().strip()
-            if continuar not in ['s', 'si', 'sí', 'y', 'yes']:
-                print("\n¡Gracias por usar el sistema de venta de entradas!")
-                break
-                
-        except KeyboardInterrupt:
-            print("\n\n¡Gracias por usar el sistema de venta de entradas!")
+        # Validar que sea un entero positivo
+        if cantidad > 0:
             break
-        except Exception as e:
-            print(f"\n❌ Error inesperado: {e}")
-            print("Intente nuevamente.")
+        else:
+            print("Error: La cantidad debe ser un número entero positivo.")
+    except ValueError:
+        print("Error: Por favor ingrese un número entero válido.")
 
-if __name__ == "__main__":
 
-    main()
+precio_unitario = sectores[sector_elegido]['precio']
+total_pagar = precio_unitario * cantidad
+
+
+print("\n" + "=" * 50)
+print("           RESUMEN DE COMPRA")
+print("=" * 50)
+print(f"Sector seleccionado: {sector_elegido} - {sectores[sector_elegido]['nombre']}")
+print(f"Precio unitario de la boleta: ${precio_unitario:,}")
+print(f"Cantidad de entradas compradas: {cantidad}")
+print(f"Total a pagar: ${total_pagar:,}")
+print("=" * 50)
+print("¡Gracias por su compra!")
